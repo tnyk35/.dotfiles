@@ -8,6 +8,7 @@ colorscheme railscasts
 syntax on "コードの色分け
 set tabstop=4 "インデントをスペース4つ分に設定
 set shiftwidth=4
+set expandtab
 set autoindent
 set smartindent "オートインデント
 set clipboard+=unnamed "コピペがOS依存でできる
@@ -16,13 +17,15 @@ set backspace=indent,eol,start "バックスペースが効かなくなるのを
 nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 "画面分割時にcontrol + l, h, j, kで移動
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
 " ステータスラインに表示
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-set statusline=%F%m%r%h%w
+set statusline=%F%m%r%h%w\ [LEN=%L]
+set incsearch
+set hlsearch "検索ハイライト
 "-------------------------------------------------
 " バンドル管理
 "-------------------------------------------------
