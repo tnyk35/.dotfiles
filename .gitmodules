@@ -1,5 +1,5 @@
-[submodule "/Users/yuki/dotfiles/oh-my-zsh"]
-	path = /Users/yuki/dotfiles/oh-my-zsh
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
 [submodule "iTerm2-Color-Schemes"]
 	path = iTerm2-Color-Schemes
