@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# submoduleを更新
+cd $HOME/dotfiles
+git submodule init
+git submodule update
+
+# シンボリックリンクの設定
 DOT_FILES=(.vimrc .oh-my-zsh .tmux.conf .zshrc)
 
 for file in ${DOT_FILES[@]}
