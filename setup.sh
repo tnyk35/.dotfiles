@@ -6,7 +6,7 @@ git submodule init
 git submodule update
 
 # シンボリックリンクの設定
-DOT_FILES=(.vimrc .oh-my-zsh .tmux.conf .zshrc oh-my-zsh)
+DOT_FILES=(.vimrc .oh-my-zsh .tmux.conf .zshrc oh-my-zsh .vim)
 
 for file in ${DOT_FILES[@]}
 do
