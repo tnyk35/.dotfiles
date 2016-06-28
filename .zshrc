@@ -105,6 +105,12 @@ bindkey '^r' peco-select-history
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
+setopt hist_ignore_dups
+setopt inc_append_history
+setopt share_history
+
+# AUTO_CDを無効化
+unsetopt AUTO_CD
 
 # nodebrew
 export PATH=$HOME/.nodebrew/current/bin:$PATH
