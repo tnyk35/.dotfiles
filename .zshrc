@@ -105,3 +105,6 @@ bindkey '^r' peco-select-history
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
+
+# nodebrew
+export PATH=$HOME/.nodebrew/current/bin:$PATH
