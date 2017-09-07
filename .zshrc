@@ -101,6 +101,11 @@ function peco-select-history() {
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 
+# svn diffをみやすくする
+svn-diff() {
+  svn diff $1 | vim -R -
+}
+
 # ヒストリ(履歴)を保存、数を増やす
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
@@ -112,5 +117,12 @@ setopt share_history
 # AUTO_CDを無効化
 unsetopt AUTO_CD
 
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+export MANPATH=/opt/local/share/man:/opt/local/man:$MANPATH
+
 # nodebrew
 export PATH=$HOME/.nodebrew/current/bin:$PATH
+eval "$(rbenv init -)"
+
+# autocomplete
+autoload -U compinit && compinit

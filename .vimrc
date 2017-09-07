@@ -6,31 +6,64 @@ set title "編集中のファイル名を表示
 set showmatch "括弧入力時の対応する括弧を表示
 colorscheme railscasts
 syntax on "コードの色分け
-set tabstop=4 "インデントをスペース4つ分に設定
-set shiftwidth=4
+set tabstop=2 "インデントをスペース2つ分に設定
+set shiftwidth=2
 set expandtab
 set autoindent
 set smartindent "オートインデント
 set clipboard+=unnamed "コピペがOS依存でできる
 set backspace=indent,eol,start "バックスペースが効かなくなるのを防ぐ
+set timeoutlen=200 "キー連続入力時間
+set ignorecase "検索時の大文字小文字区別無し
+set nocompatible "vi互換モードのoff
+
 "set expandtab
 nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+
+" ###### vimタブショートカット  ######
+nnoremap <Tab> <Nop>
+nnoremap <Tab> <C-w>w
+nnoremap <s-Tab> <C-w>W
+nnoremap <Tab>j <C-w>j
+nnoremap <Tab>k <C-w>k
+nnoremap <Tab>l <C-w>l
+nnoremap <Tab>h <C-w>h
+nnoremap <C-c> <C-w>c
+nnoremap <C-x> <C-w>x
+
+
 "画面分割時にcontrol + l, h, j, kで移動
 "map <C-j> <C-W>j
 "map <C-k> <C-W>k
 "map <C-h> <C-W>h
 "map <C-l> <C-W>l
-" ステータスラインに表示
+"###### ステータスラインに表示 ######
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 set statusline=%F%m%r%h%w\ [LEN=%L]
 set incsearch
-set hlsearch "検索ハイライト
+
+"###### 検索ハイライト ######
+"ESC連打でハイライト解除
+set hlsearch
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
+
+"###### 括弧補完 ######
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
+
+"###### 閉じタグ補完 ######
+augroup MyXML
+  autocmd!
+  autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
+  autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
+"  autocmd Filetype eruby inoremap <buffer> </ </<C-x><C-o>
+augroup END
+
 "-------------------------------------------------
 " バンドル管理
 "-------------------------------------------------
-"Vi互換OFF
-set nocompatible
 filetype off
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim/
@@ -81,7 +114,7 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 NeoBundle 'scrooloose/nerdtree'
 " Ctrl+eで表示
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
-
+let NERDTreeShowHidden = 1
 "-------------------------------------------------
 " syntastic設定
 "-------------------------------------------------
@@ -152,6 +185,14 @@ let g:user_emmet_settings = {
 " dbext設定
 "-------------------------------------------------
 NeoBundle 'vim-scripts/dbext.vim'
+
+
+"-------------------------------------------------
+" sublimetextみたいなファイル検索
+"-------------------------------------------------
+NeoBundle "ctrlpvim/ctrlp.vim"
+
+
 call neobundle#end()
 
 "ファイル形式別プラグインのロードを有効化
