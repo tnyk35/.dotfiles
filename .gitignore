@@ -3,3 +3,5 @@ tags
 .vim/bundle/*
 !.vim/bundle/neobundle.vim
 
+.DS_Store
+*.swp
