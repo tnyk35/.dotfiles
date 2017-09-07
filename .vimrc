@@ -4,20 +4,22 @@
 set number "行番号を表示する
 set title "編集中のファイル名を表示
 set showmatch "括弧入力時の対応する括弧を表示
-colorscheme railscasts
 syntax on "コードの色分け
 set tabstop=2 "インデントをスペース2つ分に設定
 set shiftwidth=2
-set expandtab
-set autoindent
+set expandtab "ソフトタブ（半角スペース）を有効
+set autoindent "オートインデント
 set smartindent "オートインデント
 set clipboard+=unnamed "コピペがOS依存でできる
 set backspace=indent,eol,start "バックスペースが効かなくなるのを防ぐ
-set timeoutlen=200 "キー連続入力時間
+set timeoutlen=200 "キー連続入力受付時間(ms)
 set ignorecase "検索時の大文字小文字区別無し
 set nocompatible "vi互換モードのoff
+set laststatus=2 "下部のステータスを常に表示
+set t_Co=256 "スクリーンカラー256色
+set incsearch " インクリメンタルサーチ
 
-"set expandtab
+" ###### タグジャンプ（ctags併用） ######
 nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 
@@ -32,16 +34,15 @@ nnoremap <Tab>h <C-w>h
 nnoremap <C-c> <C-w>c
 nnoremap <C-x> <C-w>x
 
-
 "画面分割時にcontrol + l, h, j, kで移動
 "map <C-j> <C-W>j
 "map <C-k> <C-W>k
 "map <C-h> <C-W>h
 "map <C-l> <C-W>l
+
 "###### ステータスラインに表示 ######
 "set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 set statusline=%F%m%r%h%w\ [LEN=%L]
-set incsearch
 
 "###### 検索ハイライト ######
 "ESC連打でハイライト解除
@@ -71,7 +72,7 @@ endif
 
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-NeoBundle 'Shougo/neobundle.vim'
+NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/neocomplcache'
 
 "-------------------------------------------------
@@ -95,6 +96,7 @@ let g:neocomplcache_skip_input_time = '0.5'
 NeoBundle 'Shougo/unite.vim'
 " Unite.vimで最近使ったファイルを表示できるようにする
 NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'ujihisa/unite-colorscheme'
 " 入力モードで開始する
 
 let g:unite_enable_start_insert=1
@@ -192,8 +194,23 @@ NeoBundle 'vim-scripts/dbext.vim'
 "-------------------------------------------------
 NeoBundle "ctrlpvim/ctrlp.vim"
 
+"-------------------------------------------------
+" vimのステータスバーの拡張
+"-------------------------------------------------
+NeoBundle 'itchyny/lightline.vim'
+
+"-------------------------------------------------
+" colorscheme
+"-------------------------------------------------
+" jellybeans
+NeoBundle 'nanotech/jellybeans.vim'
 
 call neobundle#end()
+
+" ###### colorscheme ######
+set background=dark
+colorscheme jellybeans
+
 
 "ファイル形式別プラグインのロードを有効化
 filetype plugin indent on

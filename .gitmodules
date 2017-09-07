@@ -7,3 +7,6 @@
 [submodule ".vim/bundle/neobundle.vim"]
 	path = .vim/bundle/neobundle.vim
 	url = https://github.com/Shougo/neobundle.vim
+[submodule "iterm2-color"]
+	path = iterm2-color
+	url = https://github.com/MartinSeeler/iterm2-material-design.git
