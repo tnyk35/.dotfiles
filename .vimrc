@@ -14,10 +14,12 @@ set clipboard+=unnamed "コピペがOS依存でできる
 set backspace=indent,eol,start "バックスペースが効かなくなるのを防ぐ
 set timeoutlen=200 "キー連続入力受付時間(ms)
 set ignorecase "検索時の大文字小文字区別無し
-set nocompatible "vi互換モードのoff
 set laststatus=2 "下部のステータスを常に表示
 set t_Co=256 "スクリーンカラー256色
 set incsearch " インクリメンタルサーチ
+set noswapfile "スワップファイル作成しない
+"set fileencodings=iso-2022-jp,cp932,sjis,euc-jp,utf-8 "文字コード自動認識
+set fileencodings=sjis,utf-8 "文字コード自動認識
 
 " ###### タグジャンプ（ctags併用） ######
 nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
@@ -62,22 +64,39 @@ augroup MyXML
 "  autocmd Filetype eruby inoremap <buffer> </ </<C-x><C-o>
 augroup END
 
+" ###### 全角スペース可視化 ######
+augroup highlightIdegraphicSpace
+  autocmd!
+  autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=160 guibg=#990000
+  autocmd VimEnter,WinEnter * match IdeographicSpace /　/
+augroup END
+
 "-------------------------------------------------
-" バンドル管理
+" バンドル管理 dein
 "-------------------------------------------------
 filetype off
-if has('vim_starting')
-	set runtimepath+=~/.vim/bundle/neobundle.vim/
+" deinパス設定
+let s:dein_dir = fnamemodify('~/.vim/dein/', ':p')
+let s:dein_repo_dir = s:dein_dir . 'repos/github.com/Shougo/dein.vim'
+
+" dein.vim本体の存在チェックとインストール
+if !isdirectory(s:dein_repo_dir)
+  execute '!git clone https://github.com/Shougo/dein.vim' shellescape(s:dein_repo_dir)
 endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
+" dein.vim本体をランタイムパスに追加
+if &runtimepath !~# '/dein.vim'
+  execute 'set runtimepath^=' . s:dein_repo_dir
+endif
 
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/neocomplcache'
 
-"-------------------------------------------------
-" neocomplcache設定
-"-------------------------------------------------
+call dein#begin(s:dein_dir)
+
+" dein.vim 自体も管理
+call dein#add('Shougo/dein.vim')
+
+"###### neocomplcache設定 ######
+call dein#add('Shougo/neocomplcache.vim')
 autocmd BufRead *.php\|*.ctp\|*.tpl :set dictionary=~/.vim/dictionaries/php.dict filetype=php
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_camel_case_completion = 1
@@ -89,16 +108,13 @@ let g:neocomplcache_caching_percent_in_statusline = 1
 let g:neocomplcache_enable_skip_completion = 1
 let g:neocomplcache_skip_input_time = '0.5'
 
-"-------------------------------------------------
-" unite.vim設定
-"-------------------------------------------------
+"###### unite.vim設定 ######
 " ファイルオープンを便利に
-NeoBundle 'Shougo/unite.vim'
+call dein#add('Shougo/unite.vim')
 " Unite.vimで最近使ったファイルを表示できるようにする
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'ujihisa/unite-colorscheme'
+call dein#add('Shougo/neomru.vim')
+call dein#add('ujihisa/unite-colorscheme')
 " 入力モードで開始する
-
 let g:unite_enable_start_insert=1
 " バッファ一覧
 noremap <C-P> :Unite buffer<CR>
@@ -110,17 +126,14 @@ noremap <C-Z> :Unite file_mru<CR>
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
 
-"-------------------------------------------------
-" NERDTree設定
-"-------------------------------------------------
-NeoBundle 'scrooloose/nerdtree'
+"###### NERDTree設定 ######
+call dein#add('scrooloose/nerdtree')
 " Ctrl+eで表示
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 let NERDTreeShowHidden = 1
-"-------------------------------------------------
-" syntastic設定
-"-------------------------------------------------
-NeoBundle 'scrooloose/syntastic'
+
+"###### syntastic設定 ######
+call dein#add('scrooloose/syntastic')
 let g:syntastic_check_on_open = 1
 let g:syntastic_enable_signs = 1
 let g:syntastic_echo_current_error = 1
@@ -132,11 +145,9 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-"-------------------------------------------------
-" vim-indent-guides設定
-"-------------------------------------------------
+"###### vim-indent-guides設定 ######
 " インデントに色を付けて見やすくする
-NeoBundle 'nathanaelkane/vim-indent-guides'
+call dein#add('nathanaelkane/vim-indent-guides')
 " vimを立ち上げたときに、自動的にvim-indent-guidesをオンにする
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_auto_colors=0
@@ -144,11 +155,9 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=240
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=235
 let g:indent_guides_guide_size=1
 
-"-------------------------------------------------
-" neosnippet設定
-"-------------------------------------------------
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
+"###### neosnippet設定 ######
+call dein#add('Shougo/neosnippet')
+call dein#add('Shougo/neosnippet-snippets')
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
@@ -158,24 +167,20 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 " \ "\<Plug>(neosnippet_expand_or_jump)"
 " \: pumvisible() ? "\<C-n>" : "\<TAB>"
 " smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
+" \ "\<Plug>(neosnippet_expand_or_jump)"
+" \: "\<TAB>"
 " For snippet_complete marker.
 if has('conceal')
 	set conceallevel=2 concealcursor=i
 endif
 
-"-------------------------------------------------
-" auto-ctags設定
-"-------------------------------------------------
-NeoBundle 'soramugi/auto-ctags.vim'
+"###### auto-ctags設定 ######
+call dein#add('soramugi/auto-ctags.vim')
 let g:auto_ctags=0 "ctags自動実行のON/OFF
 
 
-"-------------------------------------------------
-" emmet設定
-"-------------------------------------------------
-NeoBundle 'mattn/emmet-vim'
+"###### emmet設定 ######
+call dein#add('mattn/emmet-vim')
 let g:user_emmet_leader_key='<C-e>'
 let g:user_emmet_settings = {
     \    'variables': {
@@ -183,38 +188,42 @@ let g:user_emmet_settings = {
     \    }
     \ }
 
-"-------------------------------------------------
-" dbext設定
-"-------------------------------------------------
-NeoBundle 'vim-scripts/dbext.vim'
+"###### dbext設定 ######
+call dein#add('vim-scripts/dbext.vim')
 
 
-"-------------------------------------------------
-" sublimetextみたいなファイル検索
-"-------------------------------------------------
-NeoBundle "ctrlpvim/ctrlp.vim"
+"###### sublimetextみたいなファイル検索 ######
+call dein#add("ctrlpvim/ctrlp.vim")
 
-"-------------------------------------------------
-" vimのステータスバーの拡張
-"-------------------------------------------------
-NeoBundle 'itchyny/lightline.vim'
+"###### vimのステータスバーの拡張 ######
+call dein#add('itchyny/lightline.vim')
 
-"-------------------------------------------------
-" colorscheme
-"-------------------------------------------------
+"###### colorscheme ######
 " jellybeans
-NeoBundle 'nanotech/jellybeans.vim'
+call dein#add('nanotech/jellybeans.vim')
 
-call neobundle#end()
+"###### コメントアウトプラグイン ######
+call dein#add('tomtom/tcomment_vim')
 
-" ###### colorscheme ######
-set background=dark
-colorscheme jellybeans
 
+call dein#end()
 
 "ファイル形式別プラグインのロードを有効化
 filetype plugin indent on
 
 " 未インストールのプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
 " 毎回聞かれると邪魔な場合もあるので、この設定は任意です。
-NeoBundleCheck
+if dein#check_install()
+  call dein#install()
+endif
+
+"-------------------------------------------------
+" colorscheme設定
+"-------------------------------------------------
+set background=dark
+colorscheme jellybeans
+"見やすい色に変更
+hi CursorColumn term=reverse ctermbg=240 guibg=#1c1c1c
+hi CursorLine term=underline ctermbg=240 guibg=#1c1c1c
+hi Title term=bold cterm=bold ctermfg=188 gui=bold guifg=#70b950
+hi Search term=reverse cterm=underline ctermfg=16 ctermbg=217 gui=underline guifg=#f0a0c0 guibg=#302028
