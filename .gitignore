@@ -1,7 +1,6 @@
 tags
 
-.vim/bundle/*
-!.vim/bundle/neobundle.vim
+.vim/dein
 
 .DS_Store
 *.swp
