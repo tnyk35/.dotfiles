@@ -205,8 +205,11 @@ call dein#add('nanotech/jellybeans.vim')
 "###### コメントアウトプラグイン ######
 call dein#add('tomtom/tcomment_vim')
 
+"###### vim内でgitを使う ######
+call dein#add('tpope/vim-fugitive')
 
 call dein#end()
+call dein#save_state()
 
 "ファイル形式別プラグインのロードを有効化
 filetype plugin indent on
