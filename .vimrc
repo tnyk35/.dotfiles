@@ -141,6 +141,10 @@ call dein#add('digitaltoad/vim-pug')
 "###### nerdtree git status表示 ######
 call dein#add('Xuyuanp/nerdtree-git-plugin')
 
+"###### nerdtree 検索 ######
+call dein#add('rking/ag.vim')
+
+
 call dein#end()
 call dein#save_state()
 
