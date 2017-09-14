@@ -1,77 +1,4 @@
 "-------------------------------------------------
-" 基本設定
-"-------------------------------------------------
-set number "行番号を表示する
-set title "編集中のファイル名を表示
-set showmatch "括弧入力時の対応する括弧を表示
-syntax on "コードの色分け
-set tabstop=2 "インデントをスペース2つ分に設定
-set shiftwidth=2
-set expandtab "ソフトタブ（半角スペース）を有効
-set autoindent "オートインデント
-set smartindent "オートインデント
-set clipboard+=unnamed "コピペがOS依存でできる
-set backspace=indent,eol,start "バックスペースが効かなくなるのを防ぐ
-set timeoutlen=200 "キー連続入力受付時間(ms)
-set ignorecase "検索時の大文字小文字区別無し
-set laststatus=2 "下部のステータスを常に表示
-set t_Co=256 "スクリーンカラー256色
-set incsearch " インクリメンタルサーチ
-set noswapfile "スワップファイル作成しない
-"set fileencodings=iso-2022-jp,cp932,sjis,euc-jp,utf-8 "文字コード自動認識
-set fileencodings=sjis,utf-8 "文字コード自動認識
-
-" ###### タグジャンプ（ctags併用） ######
-nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
-nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
-
-" ###### vimタブショートカット  ######
-nnoremap <Tab> <Nop>
-nnoremap <Tab> <C-w>w
-nnoremap <s-Tab> <C-w>W
-nnoremap <Tab>j <C-w>j
-nnoremap <Tab>k <C-w>k
-nnoremap <Tab>l <C-w>l
-nnoremap <Tab>h <C-w>h
-nnoremap <C-c> <C-w>c
-nnoremap <C-x> <C-w>x
-
-"画面分割時にcontrol + l, h, j, kで移動
-"map <C-j> <C-W>j
-"map <C-k> <C-W>k
-"map <C-h> <C-W>h
-"map <C-l> <C-W>l
-
-"###### ステータスラインに表示 ######
-"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-set statusline=%F%m%r%h%w\ [LEN=%L]
-
-"###### 検索ハイライト ######
-"ESC連打でハイライト解除
-set hlsearch
-nmap <Esc><Esc> :nohlsearch<CR><Esc>
-
-"###### 括弧補完 ######
-inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap [<Enter> []<Left><CR><ESC><S-o>
-inoremap (<Enter> ()<Left><CR><ESC><S-o>
-
-"###### 閉じタグ補完 ######
-augroup MyXML
-  autocmd!
-  autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
-  autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
-"  autocmd Filetype eruby inoremap <buffer> </ </<C-x><C-o>
-augroup END
-
-" ###### 全角スペース可視化 ######
-augroup highlightIdegraphicSpace
-  autocmd!
-  autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=160 guibg=#990000
-  autocmd VimEnter,WinEnter * match IdeographicSpace /　/
-augroup END
-
-"-------------------------------------------------
 " バンドル管理 dein
 "-------------------------------------------------
 filetype off
@@ -208,6 +135,9 @@ call dein#add('tomtom/tcomment_vim')
 "###### vim内でgitを使う ######
 call dein#add('tpope/vim-fugitive')
 
+"###### pugのシンタックス ######
+call dein#add('digitaltoad/vim-pug')
+
 call dein#end()
 call dein#save_state()
 
@@ -221,8 +151,78 @@ if dein#check_install()
 endif
 
 "-------------------------------------------------
-" colorscheme設定
+" 基本設定
 "-------------------------------------------------
+set number "行番号を表示する
+set title "編集中のファイル名を表示
+set showmatch "括弧入力時の対応する括弧を表示
+syntax on "コードの色分け
+set tabstop=2 "インデントをスペース2つ分に設定
+set shiftwidth=2
+set expandtab "ソフトタブ（半角スペース）を有効
+set autoindent "オートインデント
+set smartindent "オートインデント
+set clipboard+=unnamed "コピペがOS依存でできる
+set backspace=indent,eol,start "バックスペースが効かなくなるのを防ぐ
+set timeoutlen=200 "キー連続入力受付時間(ms)
+set ignorecase "検索時の大文字小文字区別無し
+set laststatus=2 "下部のステータスを常に表示
+set t_Co=256 "スクリーンカラー256色
+set incsearch " インクリメンタルサーチ
+set noswapfile "スワップファイル作成しない
+"set fileencodings=iso-2022-jp,cp932,sjis,euc-jp,utf-8 "文字コード自動認識
+set fileencodings=sjis,utf-8 "文字コード自動認識
+
+" ###### タグジャンプ（ctags併用） ######
+nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+
+" ###### vimタブショートカット  ######
+nnoremap <Tab> <Nop>
+nnoremap <Tab> <C-w>w
+nnoremap <s-Tab> <C-w>W
+nnoremap <Tab>j <C-w>j
+nnoremap <Tab>k <C-w>k
+nnoremap <Tab>l <C-w>l
+nnoremap <Tab>h <C-w>h
+nnoremap <C-c> <C-w>c
+nnoremap <C-x> <C-w>x
+
+"画面分割時にcontrol + l, h, j, kで移動
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
+
+"###### ステータスラインに表示 ######
+"set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+set statusline=%F%m%r%h%w\ [LEN=%L]
+
+"###### 検索ハイライト ######
+"ESC連打でハイライト解除
+set hlsearch
+nmap <Esc><Esc> :nohlsearch<CR><Esc>
+
+"###### 括弧補完 ######
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
+
+"###### 閉じタグ補完 ######
+augroup MyXML
+  autocmd!
+  autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
+  autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
+"  autocmd Filetype eruby inoremap <buffer> </ </<C-x><C-o>
+augroup END
+
+" ###### 全角スペース可視化 ######
+augroup highlightIdegraphicSpace
+  autocmd!
+  autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=160 guibg=#990000
+  autocmd VimEnter,WinEnter * match IdeographicSpace /　/
+augroup END
+"###### colorscheme設定 ######
 set background=dark
 colorscheme jellybeans
 "見やすい色に変更
@@ -230,3 +230,6 @@ hi CursorColumn term=reverse ctermbg=240 guibg=#1c1c1c
 hi CursorLine term=underline ctermbg=240 guibg=#1c1c1c
 hi Title term=bold cterm=bold ctermfg=188 gui=bold guifg=#70b950
 hi Search term=reverse cterm=underline ctermfg=16 ctermbg=217 gui=underline guifg=#f0a0c0 guibg=#302028
+
+"###### ファイルタイプ ######
+autocmd BufNewFile,BufRead *.pug setlocal ft=pug
