@@ -48,15 +48,19 @@
   - lightline（ステータスバー）
   - tcomment_vim（コメントアウトショートカット）
   - vim-fugitive（vim内でgitが使える）
-  - jellybeans（カラースキームなので好きなものに変更する）
+  - vim-pug（pugファイル認識）
+  - nerdtree-git-plugin（NERDTreeでgitのstatusがみれるようになる）
+  - ag.vim（NERDTreeでの検索）←導入方法はwiki参照
+  - jellybeans（カラースキームなので好きなものに変更する）
 
 ### 操作方法
 ※基本ノーマルモード時の操作
 - タグジャンプ（ctag有効時のみ）：ctrl+h、ctrl+k
 - タブ移動：tab、shift+tab
-- NERDTree表示/非表示：ctrl+e
 - 検索ハイライト取り消し：Esc2回押し
 - ファイル一覧表示（unite）：ctrl+n
 - 最近使ったファイル表示（unite）：ctrl+z
 - 検索ハイライト取り消し：Esc2回押し
 - コメントアウト：ctrl+/2回押し
+- NERDTree表示/非表示：ctrl+e
+- NERDTreeでの検索:m→g
