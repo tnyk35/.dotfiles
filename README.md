@@ -48,7 +48,7 @@
   - lightline（ステータスバー）
   - tcomment_vim（コメントアウトショートカット）
   - vim-fugitive（vim内でgitが使える）
-  - vim-pug（pugファイル認識）
+  - vim-pug（pugファイル認識）
   - nerdtree-git-plugin（NERDTreeでgitのstatusがみれるようになる）
   - ag.vim（NERDTreeでの検索）←導入方法はwiki参照
   - jellybeans（カラースキームなので好きなものに変更する）
