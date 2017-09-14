@@ -138,6 +138,9 @@ call dein#add('tpope/vim-fugitive')
 "###### pugのシンタックス ######
 call dein#add('digitaltoad/vim-pug')
 
+"###### nerdtree git status表示 ######
+call dein#add('Xuyuanp/nerdtree-git-plugin')
+
 call dein#end()
 call dein#save_state()
 
@@ -222,6 +225,7 @@ augroup highlightIdegraphicSpace
   autocmd Colorscheme * highlight IdeographicSpace term=underline ctermbg=160 guibg=#990000
   autocmd VimEnter,WinEnter * match IdeographicSpace /　/
 augroup END
+
 "###### colorscheme設定 ######
 set background=dark
 colorscheme jellybeans
