@@ -126,8 +126,8 @@ call dein#add("ctrlpvim/ctrlp.vim")
 call dein#add('itchyny/lightline.vim')
 
 "###### colorscheme ######
-" jellybeans
-call dein#add('nanotech/jellybeans.vim')
+" lucius
+call dein#add('jonathanfilip/vim-lucius')
 
 "###### コメントアウトプラグイン ######
 call dein#add('tomtom/tcomment_vim')
@@ -232,12 +232,15 @@ augroup END
 
 "###### colorscheme設定 ######
 set background=dark
-colorscheme jellybeans
+colorscheme lucius
 "見やすい色に変更
 hi CursorColumn term=reverse ctermbg=240 guibg=#1c1c1c
 hi CursorLine term=underline ctermbg=240 guibg=#1c1c1c
 hi Title term=bold cterm=bold ctermfg=188 gui=bold guifg=#70b950
 hi Search term=reverse cterm=underline ctermfg=16 ctermbg=217 gui=underline guifg=#f0a0c0 guibg=#302028
+hi LineNr ctermfg=241 ctermbg=none guifg=#626262 guibg=#444444
+hi CursorLineNr cterm=bold ctermfg=247 ctermbg=none gui=bold guifg=#9e9e9e guibg=#444444
+hi VertSplit ctermfg=241 ctermbg=none guifg=#626262 guibg=#b2b2b2
 
 "###### ファイルタイプ ######
 autocmd BufNewFile,BufRead *.pug setlocal ft=pug
