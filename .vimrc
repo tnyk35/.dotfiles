@@ -127,7 +127,7 @@ call dein#add('itchyny/lightline.vim')
 
 "###### colorscheme ######
 " lucius
-call dein#add('jonathanfilip/vim-lucius')
+call dein#add('vim-scripts/Lucius')
 
 "###### コメントアウトプラグイン ######
 call dein#add('tomtom/tcomment_vim')
